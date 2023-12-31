@@ -17,4 +17,3 @@ Python 3 must be installed.
 
 In a unix environment cd where this readme is and run `./valid_parentheses.py <n>`.  
 For example: `./valid_parentheses.py 6`
-
