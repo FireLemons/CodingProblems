@@ -54,25 +54,25 @@ def traverseParenthesesOpen():
   searchCursor['index'] +=  1
   searchCursor['parenCountOpen'] += 1
 
-def doWhileLoopBody():
-  if isTraversable(False):
-    traversablePathsStack.append(searchCursor.copy())
-
-  if isTraversable(True):
-    traverseParenthesesOpen()
-  else:
-    traverseParenthesesClosed()
-  
-  if len(parenthesesString) >= outputMaxLen:
-    output.append(parenthesesString)
-  elif len(parenthesesString) == outputMaxLen - 1:
-    output.append(parenthesesString + '0')
-
-  return len(traversablePathsStack) > 0 or isTraversable(True)
-
 if n == 1:
   output.append('()')
 else:
+  def doWhileLoopBody():
+    if isTraversable(False):
+      traversablePathsStack.append(searchCursor.copy())
+
+    if isTraversable(True):
+      traverseParenthesesOpen()
+    else:
+      traverseParenthesesClosed()
+    
+    if len(parenthesesString) >= outputMaxLen:
+      output.append(parenthesesString)
+    elif len(parenthesesString) == outputMaxLen - 1:
+      output.append(parenthesesString + '0')
+
+    return len(traversablePathsStack) > 0 or isTraversable(True)
+
   while (doWhileLoopBody()):
     pass
 
