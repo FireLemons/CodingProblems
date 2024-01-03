@@ -18,7 +18,7 @@ if n < 1:
 
 output = []
 outputMaxLen = n * 2
-parenthesesString = '1'
+parenthesesString = '('
 searchCursor = {
   'index': 1,
   'parenCountClosed': 0,
@@ -41,7 +41,7 @@ def traverseParenthesesClosed():
   searchCursor = traversablePathsStack.pop()
   parenthesesString = parenthesesString[:searchCursor['index']]
 
-  parenthesesString = parenthesesString + '0'
+  parenthesesString = parenthesesString + ')'
   searchCursor['index'] +=  1
   searchCursor['parenCountClosed'] += 1
 
@@ -50,9 +50,12 @@ def traverseParenthesesClosed():
 def traverseParenthesesOpen():
   global parenthesesString
 
-  parenthesesString = parenthesesString + '1'
+  parenthesesString = parenthesesString + '('
   searchCursor['index'] +=  1
   searchCursor['parenCountOpen'] += 1
+
+  if searchCursor['parenCountOpen'] == n:
+    parenthesesString += ')' * (n - searchCursor['parenCountClosed'] - 1)
 
 if n == 1:
   output.append('()')
@@ -69,7 +72,7 @@ else:
     if len(parenthesesString) >= outputMaxLen:
       output.append(parenthesesString)
     elif len(parenthesesString) == outputMaxLen - 1:
-      output.append(parenthesesString + '0')
+      output.append(parenthesesString + ')')
 
     return len(traversablePathsStack) > 0 or isTraversable(True)
 
