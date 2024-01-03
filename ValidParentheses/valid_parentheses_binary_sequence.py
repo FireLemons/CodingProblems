@@ -16,21 +16,20 @@ if n < 1:
   print("n must be at least 1")
   exit()
 
-alternatingBitsEndingInZero = [2]
-output = []
+alternatingBits = [0]
 
 def binaryToParentheses(number):
   return format(number, 'b').replace('0', ')').replace('1', '(')
 
-def getAlternatingBitsEndingInZero (n):
-  computedValuesCount = len(alternatingBitsEndingInZero)
+def getAlternatingBits (numberOfBits):
+  computedValuesCount = len(alternatingBits)
 
-  if computedValuesCount < n:
-    while computedValuesCount < n:
-      alternatingBitsEndingInZero.append(alternatingBitsEndingInZero[computedValuesCount - 1] * 4 + 2)
+  if computedValuesCount <= numberOfBits:
+    while computedValuesCount <= numberOfBits:
+      alternatingBits.append(alternatingBits[computedValuesCount - 1] * 2 + computedValuesCount % 2)
       computedValuesCount += 1
 
-  return alternatingBitsEndingInZero[n - 1]
+  return alternatingBits[numberOfBits - 1]
 
 def slowAssPythonHammingWeight(number):
   weight = 0
@@ -41,4 +40,18 @@ def slowAssPythonHammingWeight(number):
 
   return weight
 
-print(getAlternatingBitsEndingInZero(12))
+lastOutput = 0
+
+while lastOutput < 2 ** (n - 1):
+  lastOutput *= 2
+  lastOutput += 1
+
+lastOutput *= 2 ** n
+mostRecentlyComputedNumber = getAlternatingBits(n * 2)
+output = [mostRecentlyComputedNumber]
+
+while mostRecentlyComputedNumber < lastOutput:
+  break
+
+getAlternatingBits(12)
+print(alternatingBits)
