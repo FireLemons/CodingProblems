@@ -79,4 +79,4 @@ else:
   while (doWhileLoopBody()):
     pass
 
-print(output)
+print(len(output))

@@ -19,7 +19,7 @@ if n < 1:
 alternatingBits = [0]
 
 def binaryToParentheses(number):
-  return format(number, 'b').replace('0', ')').replace('1', '(')
+  return format(number, 'b')#.replace('0', ')').replace('1', '(')
 
 def getAlternatingBits (numberOfBits):
   computedValuesCount = len(alternatingBits)
@@ -29,7 +29,7 @@ def getAlternatingBits (numberOfBits):
       alternatingBits.append(alternatingBits[computedValuesCount - 1] * 2 + computedValuesCount % 2)
       computedValuesCount += 1
 
-  return alternatingBits[numberOfBits - 1]
+  return alternatingBits[numberOfBits]
 
 def slowAssPythonHammingWeight(number):
   weight = 0
@@ -48,10 +48,22 @@ while lastOutput < 2 ** (n - 1):
 
 lastOutput *= 2 ** n
 mostRecentlyComputedNumber = getAlternatingBits(n * 2)
-output = [mostRecentlyComputedNumber]
+numberToAdd = 2
+output = [binaryToParentheses(mostRecentlyComputedNumber)]
 
 while mostRecentlyComputedNumber < lastOutput:
-  break
+  mostRecentlyComputedNumber += numberToAdd
+  numberToAdd *= 2
 
-getAlternatingBits(12)
-print(alternatingBits)
+  mostRecentlyComputedNumberHammingWeight = slowAssPythonHammingWeight(mostRecentlyComputedNumber)
+
+  if (mostRecentlyComputedNumberHammingWeight < n):
+    #print(f'{binaryToParentheses(mostRecentlyComputedNumber)} was found to not have enough bits')
+    #print(f'adding {getAlternatingBits((n - mostRecentlyComputedNumberHammingWeight) * 2)}')
+    mostRecentlyComputedNumber += getAlternatingBits((n -  mostRecentlyComputedNumberHammingWeight) * 2)
+    numberToAdd = 2
+
+  #print(binaryToParentheses(mostRecentlyComputedNumber))
+  output.append(binaryToParentheses(mostRecentlyComputedNumber))
+
+print(len(output))
