@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-import struct
 import sys
 
 if len(sys.argv) == 1:
@@ -19,11 +18,6 @@ if n < 1:
 
 alternatingBits = [0]
 
-if struct.calcsize("i") == 4: # 32 bit ints
-  bitCaptures = [0x55555555, 0x33333333, 0x0f0f0f0f, 0x00ff00ff, 0x0000ffff]
-else: # assuming 64 bit ints
-  bitCaptures = [0x5555555555555555, 0x3333333333333333, 0x0f0f0f0f0f0f0f0f, 0x00ff00ff00ff00ff, 0x0000ffff0000ffff, 0x00000000ffffffff]
-
 def binaryToParentheses(number):
   return format(number, 'b').replace('0', ')').replace('1', '(')
 
@@ -37,12 +31,12 @@ def getAlternatingBits (numberOfBits):
 
   return alternatingBits[numberOfBits]
 
-def getHammingWeight(number):
-  weight = number
+def slowAssPythonHammingWeight(number):
+  weight = 0
 
-  for i in range(0, len(bitCaptures)): 
-    bitCapture = bitCaptures[i]
-    weight = (weight & bitCapture) + ((weight >> (2 ** i)) & bitCapture)
+  while number:
+    weight += 1
+    number &= number - 1
 
   return weight
 
@@ -61,7 +55,7 @@ while mostRecentlyComputedNumber < lastOutput:
   mostRecentlyComputedNumber += numberToAdd
   numberToAdd *= 2
 
-  mostRecentlyComputedNumberHammingWeight = getHammingWeight(mostRecentlyComputedNumber)
+  mostRecentlyComputedNumberHammingWeight = slowAssPythonHammingWeight(mostRecentlyComputedNumber)
 
   if (mostRecentlyComputedNumberHammingWeight < n):
     mostRecentlyComputedNumber += getAlternatingBits((n -  mostRecentlyComputedNumberHammingWeight) * 2)
