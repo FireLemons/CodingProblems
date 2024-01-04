@@ -31,7 +31,7 @@ def getAlternatingBits (numberOfBits):
 
   return alternatingBits[numberOfBits]
 
-def slowAssPythonHammingWeight(number):
+def getHammingWeight(number):
   weight = 0
 
   while number:
@@ -55,7 +55,7 @@ while mostRecentlyComputedNumber < lastOutput:
   mostRecentlyComputedNumber += numberToAdd
   numberToAdd *= 2
 
-  mostRecentlyComputedNumberHammingWeight = slowAssPythonHammingWeight(mostRecentlyComputedNumber)
+  mostRecentlyComputedNumberHammingWeight = getHammingWeight(mostRecentlyComputedNumber)
 
   if (mostRecentlyComputedNumberHammingWeight < n):
     mostRecentlyComputedNumber += getAlternatingBits((n -  mostRecentlyComputedNumberHammingWeight) * 2)
